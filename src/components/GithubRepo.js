@@ -4,6 +4,7 @@ export const GithubRepo = () => {
   //some states
   const [repos, setRepos] = useState();
   const [username, setUsername] = useState("am0031");
+  const [inputValue, setInputValue] = useState("");
 
   //function to get repos
   const getRepos = async (username) => {
@@ -21,6 +22,7 @@ export const GithubRepo = () => {
 
   const handleChange = (event) => {
     setUsername(event.target.value);
+    setInputValue(event.target.value);
   };
 
   //some useEffect
@@ -34,6 +36,7 @@ export const GithubRepo = () => {
       <form onSubmit={onSubmit}>
         <input
           id="search-input"
+          value={inputValue}
           placeholder="Enter github username"
           onChange={handleChange}
         ></input>
