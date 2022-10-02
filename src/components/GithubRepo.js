@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 export const GithubRepo = () => {
   //some states
   const [repos, setRepos] = useState();
-  const [username, setUsername] = useState("am0031");
-  const [inputValue, setInputValue] = useState("");
+  const [username, setUsername] = useState("");
 
   //function to get repos
   const getRepos = async (username) => {
@@ -22,12 +21,11 @@ export const GithubRepo = () => {
 
   const handleChange = (event) => {
     setUsername(event.target.value);
-    setInputValue(event.target.value);
   };
 
   //some useEffect
   useEffect(() => {
-    getRepos(username);
+    getRepos("am0031");
   }, []);
 
   return (
@@ -36,7 +34,7 @@ export const GithubRepo = () => {
       <form onSubmit={onSubmit}>
         <input
           id="search-input"
-          value={inputValue}
+          value={username}
           placeholder="Enter github username"
           onChange={handleChange}
         ></input>
