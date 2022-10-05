@@ -5,7 +5,6 @@ import { GithubRepo } from "./components/GithubRepo";
 function App() {
   return (
     <>
-      <Counter />
       <GithubRepo />
     </>
   );
