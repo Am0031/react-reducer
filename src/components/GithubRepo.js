@@ -40,13 +40,18 @@ export const GithubRepo = () => {
         ></input>
         <button id="submit-btn">Search</button>
       </form>
-      {repos && repos.length ? (
-        repos.map((item) => {
-          return <div key={item.id}>{item.name}</div>;
-        })
-      ) : (
-        <div> No repos </div>
-      )}
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <div>
+          {repos && repos.length ? (
+            repos.map((item) => {
+              return <div key={item.id}>{item.name}</div>;
+            })
+          ) : (
+            <div> No repos </div>
+          )}
+        </div>
+        <div> Details for this repo</div>
+      </div>
     </div>
   );
 };
