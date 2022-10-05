@@ -1,41 +1,62 @@
-import { useEffect, useState } from "react";
+import { useReducer, useEffect, useState } from "react";
 
 export const GithubRepo = () => {
-  //some states
-  const [repos, setRepos] = useState();
-  const [selectedRepo, setSelectedRepo] = useState();
-  const [username, setUsername] = useState("");
+  //initial state
+  const initialState = {
+    repos: undefined,
+    selectedRepo: undefined,
+    username: "am0031",
+  };
+  //function reducer
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case "repos":
+        return { ...state, repos: action.newRepos };
+      case "selected":
+        return { ...state, selectedRepo: action.selection };
+      case "username":
+        return { ...state, username: action.username };
+      default:
+        throw new Error();
+    }
+  };
+  //useReducer state
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  //useEffect for onload repos population
+  useEffect(() => {
+    getReposAndDispatch(state.username);
+  }, []);
 
   //function to get repos
-  const getRepos = async (username) => {
-    const response = await fetch(
-      `https://api.github.com/users/${username}/repos`
-    ).then((response) => response.json());
-    setRepos(response);
+  const getReposAndDispatch = async (username) => {
+    const getRepos = async (username) => {
+      const response = await fetch(
+        `https://api.github.com/users/${username}/repos`
+      ).then((response) => response.json());
+      return response;
+    };
+    const newRepos = await getRepos(username);
+    dispatch({ type: "repos", newRepos });
   };
 
   //function to get the info from the form and do the search
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
-    setSelectedRepo();
-    getRepos(username);
+    getReposAndDispatch(state.username);
   };
 
+  //function to handle input field change
   const handleChange = (event) => {
-    setUsername(event.target.value);
+    dispatch({ type: "username", username: event.target.value });
   };
-
-  //some useEffect
-  useEffect(() => {
-    getRepos("am0031");
-  }, []);
 
   //function to handle click on a repo to see more details
   const onRepoClick = (event) => {
-    const selection = repos.filter(
+    const selection = state.repos.filter(
       (item) => item.id === parseInt(event.target.id)
     )[0];
-    setSelectedRepo(selection);
+    dispatch({ type: "selected", selection });
   };
 
   return (
@@ -44,7 +65,7 @@ export const GithubRepo = () => {
       <form onSubmit={onSubmit}>
         <input
           id="search-input"
-          value={username}
+          value={state.username}
           placeholder="Enter github username"
           onChange={handleChange}
         ></input>
@@ -60,8 +81,8 @@ export const GithubRepo = () => {
           }}
         >
           <h2>Search results</h2>
-          {repos && repos.length ? (
-            repos.map((item) => {
+          {state.repos && state.repos.length ? (
+            state.repos.map((item) => {
               return (
                 <button
                   style={{ height: "20", width: "80%" }}
@@ -79,11 +100,11 @@ export const GithubRepo = () => {
         </div>
         <div style={{ display: "flex", flexDirection: "column", width: "50%" }}>
           <h2>Details for this repo</h2>
-          {selectedRepo && (
+          {state.selectedRepo && (
             <>
-              <h3>{selectedRepo.name}</h3>
-              <h3>Last updated: {selectedRepo.updated_at}</h3>
-              <h3>URL: {selectedRepo.url}</h3>
+              <h3>{state.selectedRepo.name}</h3>
+              <h3>Last updated: {state.selectedRepo.updated_at}</h3>
+              <h3>URL: {state.selectedRepo.url}</h3>
             </>
           )}
         </div>
