@@ -1,17 +1,17 @@
-import { useReducer, useEffect, useState } from "react";
+import { useReducer, useEffect } from "react";
 
 export const GithubRepo = () => {
   //initial state
   const initialState = {
     repos: undefined,
     selectedRepo: undefined,
-    username: "am0031",
+    username: "",
   };
   //function reducer
   const reducer = (state, action) => {
     switch (action.type) {
       case "repos":
-        return { ...state, repos: action.newRepos };
+        return { ...state, selectedRepo: undefined, repos: action.newRepos };
       case "selected":
         return { ...state, selectedRepo: action.selection };
       case "username":
@@ -25,7 +25,7 @@ export const GithubRepo = () => {
 
   //useEffect for onload repos population
   useEffect(() => {
-    getReposAndDispatch(state.username);
+    getReposAndDispatch("am0031");
   }, []);
 
   //function to get repos
