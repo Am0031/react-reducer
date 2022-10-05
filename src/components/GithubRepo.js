@@ -31,7 +31,9 @@ export const GithubRepo = () => {
 
   //function to handle click on a repo to see more details
   const onRepoClick = (event) => {
-    const selection = repos.filter((item) => item.id == event.target.id)[0];
+    const selection = repos.filter(
+      (item) => item.id === parseInt(event.target.id)
+    )[0];
     setSelectedRepo(selection);
   };
 
