@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 export const GithubRepo = () => {
   //some states
   const [repos, setRepos] = useState();
+  const [selectedRepo, setSelectedRepo] = useState();
   const [username, setUsername] = useState("");
 
   //function to get repos
@@ -28,6 +29,12 @@ export const GithubRepo = () => {
     getRepos("am0031");
   }, []);
 
+  //function to handle click on a repo to see more details
+  const onRepoClick = (event) => {
+    const selection = repos.filter((item) => item.id == event.target.id)[0];
+    setSelectedRepo(selection);
+  };
+
   return (
     <div>
       <h1>Public repos by user</h1>
@@ -40,17 +47,43 @@ export const GithubRepo = () => {
         ></input>
         <button id="submit-btn">Search</button>
       </form>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <div>
+      <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "50%",
+          }}
+        >
+          <h2>Search results</h2>
           {repos && repos.length ? (
             repos.map((item) => {
-              return <div key={item.id}>{item.name}</div>;
+              return (
+                <button
+                  style={{ height: "20", width: "80%" }}
+                  key={item.id}
+                  id={item.id}
+                  onClick={onRepoClick}
+                >
+                  {item.name}
+                </button>
+              );
             })
           ) : (
             <div> No repos </div>
           )}
         </div>
-        <div> Details for this repo</div>
+        <div style={{ display: "flex", flexDirection: "column", width: "50%" }}>
+          <h2>Details for this repo</h2>
+          {selectedRepo && (
+            <>
+              <h3>{selectedRepo.name}</h3>
+              <h3>Last updated: {selectedRepo.updated_at}</h3>
+              <h3>URL: {selectedRepo.url}</h3>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
