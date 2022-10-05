@@ -17,6 +17,7 @@ export const GithubRepo = () => {
   //function to get the info from the form and do the search
   const onSubmit = (event) => {
     event.preventDefault();
+    setSelectedRepo();
     getRepos(username);
   };
 
