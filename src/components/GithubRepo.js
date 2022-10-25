@@ -17,10 +17,9 @@ export const GithubRepo = () => {
         return { ...state, selectedRepo: action.selection };
       case "username":
         return { ...state, username: action.username };
-      case "usernamefirst":
+      case "searching":
         return {
           ...state,
-          username: action.username,
           isSearching: action.isSearching,
         };
       default:
@@ -58,13 +57,11 @@ export const GithubRepo = () => {
   const handleChange = (event) => {
     if (!state.isSearching) {
       dispatch({
-        type: "usernamefirst",
-        username: event.target.value,
+        type: "searching",
         isSearching: true,
       });
-    } else {
-      dispatch({ type: "username", username: event.target.value });
     }
+    dispatch({ type: "username", username: event.target.value });
   };
 
   //function to handle click on a repo to see more details
