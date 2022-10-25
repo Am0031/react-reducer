@@ -30,7 +30,7 @@ export const GithubRepo = () => {
   //useReducer state
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  //useEffect for onload repos population
+  //useEffect for repos population on load of page
   useEffect(() => {
     getReposAndDispatch("am0031");
   }, []);
@@ -40,7 +40,7 @@ export const GithubRepo = () => {
     if (state.isSearching === true) {
       getReposAndDispatch(state.username);
     }
-  }, [state.username, state.isSearching]);
+  }, [state.username]);
 
   //function to get repos
   const getReposAndDispatch = async (username) => {
