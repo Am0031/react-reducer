@@ -1,7 +1,7 @@
 # React-Reducer
 
 This project is an introduction to the react hook useReducer. It follows our practice with useState and useEffect hooks.
-It is the illustration code for the hashnode blog article ["Using the react useReducer hook with an API call"](). This article is part #3 of a 7-part series on React hooks.
+It is the illustration code for the hashnode blog article ["Using the react useReducer hook with an API call"](https://fullstackjslearning.hashnode.dev/using-react-usereducer-hook-with-an-api-call). This article is part #3 of a 7-part series on React hooks.
 
 ## Installation
 
